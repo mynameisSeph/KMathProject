@@ -20,11 +20,11 @@ namespace KM.BackOffice.Application.Repositories
             this.kDBContext = KDBContext;
         }
 
-        public async Task<List<UserReq>> getAllUsersAsync()
+        public async Task<List<UserViewModel>> getAllUsersAsync()
         {
             try
             {
-                var users = await kDBContext.Users.Where(s => s.IsDeleted == false).Select(s => new UserReq
+                var users = await kDBContext.Users.Where(s => s.IsDeleted == false).Select(s => new UserViewModel
                 {
                     Username = s.Username,
                     Password = s.Password,

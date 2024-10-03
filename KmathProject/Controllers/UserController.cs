@@ -19,6 +19,11 @@ namespace KM.BackOffice.Controllers
             return View(users);
         }
 
+        public IActionResult _UpdatePanel()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create(UserReq req)
         {

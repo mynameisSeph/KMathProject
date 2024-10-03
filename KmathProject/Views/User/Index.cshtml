@@ -1,12 +1,12 @@
 ﻿@using KM.BackOffice.Application.ViewModels
-@model List<UserReq>
+@model List<UserViewModel>
 <div class="">
     <div class="d-flex">
         <div class="col" style="font-size:20px; font-weight:700;">
             จัดการผู้ใช้งาน
         </div>
         <div class="col d-flex justify-content-end">
-            <button class="btn btn-light">
+            <button class="btn-light" data-bs-toggle="offcanvas" href="#createUserPanel" role="button" aria-controls="createUserPanel">
                 เพิ่มข้อมูล
             </button>
         </div>
@@ -25,37 +25,47 @@
                 </tr>
             </thead>
             <tbody>
+                @{
+                    int index = 1;
+                }
                 @foreach (var user in Model)
                 {
                     <tr>
-                        <td class="text-center">@user.Id</td>
+                        <td class="text-center">@index</td>
                         <td>@user.FirstName</td>
                         <td>@user.LastName</td>
                         <td>@user.Username</td>
                         <td>@user.Email</td>
-                        <td class="align-middle"> 
+                        <td class="align-middle">
                             <div class="d-flex justify-content-center">
 
-                            @if (user.IsActive == true)
-                            {
-                                <span class="badge bg-success">Active</span>
-                            }
-                            else
-                            {
-                                <span class="badge bg-danger">Inactive</span>
-                            }
+                                @if (user.IsActive == true)
+                                {
+                                    <span class="badge bg-success">Active</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Inactive</span>
+                                }
                             </div>
                         </td>
-                        <td class ="align-middle">
+                        <td class="align-middle">
                             <div class="d-flex justify-content-center">
-                                <span><i class="bi bi-pencil-square"></i></span>
-                                <span class="ps-2"><i class="bi bi-trash"></i></span>
+                                <button class="btn-light" data-bs-toggle="offcanvas" href="#updateUserPanel" role="button" aria-controls="updateUserPanel">
+                                    <span><i class="bi bi-pencil-square"></i></span>
+                                </button>
+                                <button class="btn-light">
+                                    <span><i class="bi bi-trash"></i></span>
+                                </button>
                             </div>
                         </td>
                     </tr>
+                    index++;
                 }
             </tbody>
         </table>
 
     </div>
 </div>
+@await Html.PartialAsync("_CreatePanel.cshtml")
+@await Html.PartialAsync("_UpdatePanel.cshtml")
