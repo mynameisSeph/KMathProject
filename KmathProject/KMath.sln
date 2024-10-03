@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KM.BackOffice", "KM.BackOffice.csproj", "{96E1C71C-669B-4200-99FA-FD8E82DCFAAA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-BackOffice", "01-BackOffice", "{D169BA6B-A32C-4999-9B1C-C2557AD1189A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-Database", "02-Database", "{0D0C2E91-EE7B-425B-83F2-B752DB9EE1EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-Core", "03-Core", "{7C4F5786-3E42-4CBC-8832-87957A431B45}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KM.BackOffice.Application", "..\KM.BackOffice.Application\KM.BackOffice.Application.csproj", "{710F75B7-6DF0-4C1B-8B59-4E817ED0B925}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KM.BackOffice.Database", "..\KM.BackOffice.Databases\KM.BackOffice.Database.csproj", "{32EAA241-6010-4047-9D5F-50EB472DE46D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KM.BackOffice.Core", "..\KM.BackOffice.Core\KM.BackOffice.Core.csproj", "{E4178F20-D79E-4212-85E7-96DC3125501A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{96E1C71C-669B-4200-99FA-FD8E82DCFAAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96E1C71C-669B-4200-99FA-FD8E82DCFAAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96E1C71C-669B-4200-99FA-FD8E82DCFAAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96E1C71C-669B-4200-99FA-FD8E82DCFAAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{710F75B7-6DF0-4C1B-8B59-4E817ED0B925}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{710F75B7-6DF0-4C1B-8B59-4E817ED0B925}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{710F75B7-6DF0-4C1B-8B59-4E817ED0B925}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{710F75B7-6DF0-4C1B-8B59-4E817ED0B925}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32EAA241-6010-4047-9D5F-50EB472DE46D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32EAA241-6010-4047-9D5F-50EB472DE46D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32EAA241-6010-4047-9D5F-50EB472DE46D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32EAA241-6010-4047-9D5F-50EB472DE46D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4178F20-D79E-4212-85E7-96DC3125501A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4178F20-D79E-4212-85E7-96DC3125501A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4178F20-D79E-4212-85E7-96DC3125501A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4178F20-D79E-4212-85E7-96DC3125501A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{96E1C71C-669B-4200-99FA-FD8E82DCFAAA} = {D169BA6B-A32C-4999-9B1C-C2557AD1189A}
+		{710F75B7-6DF0-4C1B-8B59-4E817ED0B925} = {D169BA6B-A32C-4999-9B1C-C2557AD1189A}
+		{32EAA241-6010-4047-9D5F-50EB472DE46D} = {0D0C2E91-EE7B-425B-83F2-B752DB9EE1EF}
+		{E4178F20-D79E-4212-85E7-96DC3125501A} = {7C4F5786-3E42-4CBC-8832-87957A431B45}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {84C5A2A5-095B-41BC-9106-58D0240085EA}
+	EndGlobalSection
+EndGlobal
