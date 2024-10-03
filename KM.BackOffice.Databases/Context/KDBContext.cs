@@ -59,6 +59,9 @@ public partial class KDBContext : DbContext
             entity.Property(e => e.Username)
                 .HasMaxLength(50)
                 .HasColumnName("username");
+            entity.Property(e => e.IsDeleted)
+                .HasDefaultValue(false)
+                .HasColumnName("is_deleted");
         });
 
         OnModelCreatingPartial(modelBuilder);

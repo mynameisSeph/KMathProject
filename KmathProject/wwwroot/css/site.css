@@ -1,5 +1,5 @@
-html {
-  font-size: 14px;
+﻿html {
+  font-size: 16px;
 }
 
 @media (min-width: 768px) {
@@ -19,4 +19,12 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+.content-wrapper {
+    position: relative;
+    min-height: 80vh;
+    background-image: url(/images/bg-asset-pink.png);
+    background-position: left bottom;
+    background-repeat: no-repeat;
 }

@@ -1,0 +1,61 @@
+﻿@using KM.BackOffice.Application.ViewModels
+@model List<UserReq>
+<div class="">
+    <div class="d-flex">
+        <div class="col" style="font-size:20px; font-weight:700;">
+            จัดการผู้ใช้งาน
+        </div>
+        <div class="col d-flex justify-content-end">
+            <button class="btn btn-light">
+                เพิ่มข้อมูล
+            </button>
+        </div>
+    </div>
+    <div class="d-flex pt-2">
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="text-center">#</th>
+                    <th scope="col">ชื่อ</th>
+                    <th scope="col">สกุล</th>
+                    <th scope="col">ชื่อผู้ใช้</th>
+                    <th scope="col">อีเมลล์</th>
+                    <th scope="col" class="text-center">สถานะ</th>
+                    <th scope="col" class="text-center">เครื่องมือ</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td class="text-center">@user.Id</td>
+                        <td>@user.FirstName</td>
+                        <td>@user.LastName</td>
+                        <td>@user.Username</td>
+                        <td>@user.Email</td>
+                        <td class="align-middle"> 
+                            <div class="d-flex justify-content-center">
+
+                            @if (user.IsActive == true)
+                            {
+                                <span class="badge bg-success">Active</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Inactive</span>
+                            }
+                            </div>
+                        </td>
+                        <td class ="align-middle">
+                            <div class="d-flex justify-content-center">
+                                <span><i class="bi bi-pencil-square"></i></span>
+                                <span class="ps-2"><i class="bi bi-trash"></i></span>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

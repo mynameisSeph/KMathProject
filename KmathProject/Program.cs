@@ -1,3 +1,4 @@
+using KM.BackOffice.Application.Repositories;
 using KM.BackOffice.Database.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,8 @@ builder.Services.AddDbContext<KDBContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("KDBContext"));
 });
 
+// Add scope of repositories
+builder.Services.AddScoped<UserRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
