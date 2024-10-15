@@ -14,7 +14,9 @@ builder.Services.AddDbContext<KDBContext>(options =>
 });
 
 // Add scope of repositories
+builder.Services.AddScoped<AccountRepository>();
 builder.Services.AddScoped<UserRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,6 +36,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.Run();

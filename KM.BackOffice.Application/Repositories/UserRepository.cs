@@ -26,12 +26,12 @@ namespace KM.BackOffice.Application.Repositories
             {
                 var users = await kDBContext.Users.Where(s => s.IsDeleted == false).Select(s => new UserViewModel
                 {
+                    Id = s.Id,
                     Username = s.Username,
                     Password = s.Password,
                     FirstName = !string.IsNullOrWhiteSpace(s.FirstName) ? s.FirstName : "",
                     LastName = !string.IsNullOrWhiteSpace(s.LastName) ? s.LastName : "",
-                    Email = s.Email,
-                    IsActive = s.IsActive,
+                    IsActive = s.IsActive ?? false,
                     CreatedAt = s.CreatedAt,
                     UpdatedAt = s.UpdatedAt,
                 }).OrderByDescending(s => s.CreatedAt).ToListAsync();
@@ -44,23 +44,22 @@ namespace KM.BackOffice.Application.Repositories
             }
         }
 
-        public async Task<UserReq> getUsersByIdAsync(int userId)
+        public async Task<UserModel> getUsersByIdAsync(int userId)
         {
             try
             {
-                var users = await kDBContext.Users.Where(s => s.Id == userId && s.IsDeleted == false).Select(s => new UserReq
+                var users = await kDBContext.Users.Where(s => s.Id == userId && s.IsDeleted == false).Select(s => new Core.Models.UserModel
                 {
                     Username = s.Username,
                     Password = s.Password,
                     FirstName = !string.IsNullOrWhiteSpace(s.FirstName) ? s.FirstName : "",
                     LastName = !string.IsNullOrWhiteSpace(s.LastName) ? s.LastName : "",
-                    Email = s.Email,
-                    IsActive = s.IsActive,
+                    IsActive = s.IsActive ?? false,
                     CreatedAt = s.CreatedAt,
                     UpdatedAt = s.UpdatedAt,
                 }).FirstOrDefaultAsync();
 
-                return users ?? new UserReq();
+                return users ?? new UserModel();
             }
             catch
             {
@@ -68,20 +67,20 @@ namespace KM.BackOffice.Application.Repositories
             }
         }
 
-        public async Task<bool> insertUsersAsync(UserReq userReq)
+        public async Task<bool> insertUsersAsync(UserModel userReq)
         {
             try
             {
                 if (userReq == null)
                     return false;
 
-                var user = new User();
-                user.Username = userReq.Username;
-                user.Email = userReq.Email;
-                user.Password = userReq.Password;
-                user.FirstName = !string.IsNullOrWhiteSpace(userReq.FirstName) ? user.FirstName : "";
-                user.LastName = !string.IsNullOrWhiteSpace(userReq.LastName) ? user.LastName : "";
+                var user = new Database.Entities.User();
+                user.Username = userReq.Username ?? "";
+                user.Password = userReq.Password ?? "";
+                user.FirstName = userReq.FirstName ?? "";
+                user.LastName = userReq.LastName ?? "";
                 user.CreatedAt = DateTime.UtcNow;
+                user.IsActive = userReq.IsActive;
                 user.UpdatedAt = DateTime.UtcNow;
 
                 kDBContext.Add(user);
@@ -95,9 +94,12 @@ namespace KM.BackOffice.Application.Repositories
             }
         }
 
-        public async Task<bool> updateUsersAsync(int userId, UserReq userReq)
+        public async Task<bool> updateUsersAsync(int userId, UserModel userReq)
         {
-            if (userReq == null && userId < 1)
+            if (userReq == null)
+                return false;
+
+            if (userId < 1)
                 return false;
 
             var indexUser = await kDBContext.Users.FindAsync(userId);
@@ -105,9 +107,8 @@ namespace KM.BackOffice.Application.Repositories
             if (indexUser == null)
                 return false;
 
-            indexUser.Username = userReq.Username;
-            indexUser.Password = userReq.Password;
-            indexUser.Email = userReq.Email;
+            indexUser.Username = userReq.Username ?? "";
+            indexUser.Password = userReq.Password ?? "";
             indexUser.FirstName = !string.IsNullOrWhiteSpace(userReq.FirstName) ? userReq.FirstName : "";
             indexUser.LastName = !string.IsNullOrWhiteSpace(userReq.LastName) ? userReq.LastName : "";
             indexUser.CreatedAt = userReq.CreatedAt;

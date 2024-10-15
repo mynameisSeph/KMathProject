@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace KM.BackOffice.Core.Models
 {
-    public class UserReq
+    public class UserModel
     {
+        public int Id { get; set; }
         [Required]
         public string? Username { get; set; }
-
-        [Required]
-        public string? Email { get; set; }
 
         [Required]
         public string? Password { get; set; }
@@ -22,7 +20,7 @@ namespace KM.BackOffice.Core.Models
 
         public string? LastName { get; set; }
 
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; }
 
         public DateTime? CreatedAt { get; set; }
 

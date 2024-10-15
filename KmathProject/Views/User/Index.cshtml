@@ -1,14 +1,20 @@
 ﻿@using KM.BackOffice.Application.ViewModels
-@model List<UserViewModel>
+@{
+    var AllUsers = ViewBag.GetAllUsers;
+    Layout = "_Layout";
+}
 <div class="">
     <div class="d-flex">
         <div class="col" style="font-size:20px; font-weight:700;">
             จัดการผู้ใช้งาน
         </div>
         <div class="col d-flex justify-content-end">
-            <button class="btn-light" data-bs-toggle="offcanvas" href="#createUserPanel" role="button" aria-controls="createUserPanel">
-                เพิ่มข้อมูล
-            </button>
+            <form asp-action="IndexPanel" asp-controller="User" method="get">
+                <input type="hidden" name="userId" value="0"/>
+                <button type="submit" class="btn-light">
+                    เพิ่มข้อมูล
+                </button>
+            </form>
         </div>
     </div>
     <div class="d-flex pt-2">
@@ -19,7 +25,6 @@
                     <th scope="col">ชื่อ</th>
                     <th scope="col">สกุล</th>
                     <th scope="col">ชื่อผู้ใช้</th>
-                    <th scope="col">อีเมลล์</th>
                     <th scope="col" class="text-center">สถานะ</th>
                     <th scope="col" class="text-center">เครื่องมือ</th>
                 </tr>
@@ -28,18 +33,17 @@
                 @{
                     int index = 1;
                 }
-                @foreach (var user in Model)
+                @foreach (var item in AllUsers)
                 {
                     <tr>
                         <td class="text-center">@index</td>
-                        <td>@user.FirstName</td>
-                        <td>@user.LastName</td>
-                        <td>@user.Username</td>
-                        <td>@user.Email</td>
+                        <td>@item.FirstName</td>
+                        <td>@item.LastName</td>
+                        <td>@item.Username</td>
                         <td class="align-middle">
                             <div class="d-flex justify-content-center">
 
-                                @if (user.IsActive == true)
+                                @if (item.IsActive == true)
                                 {
                                     <span class="badge bg-success">Active</span>
                                 }
@@ -51,9 +55,12 @@
                         </td>
                         <td class="align-middle">
                             <div class="d-flex justify-content-center">
-                                <button class="btn-light" data-bs-toggle="offcanvas" href="#updateUserPanel" role="button" aria-controls="updateUserPanel">
-                                    <span><i class="bi bi-pencil-square"></i></span>
-                                </button>
+                                <form asp-action="IndexPanel" asp-controller="User" method="get">
+                                    <input type="hidden" name="userId" value="@item.Id" />
+                                    <button type="submit" class="btn-light">
+                                        <span><i class="bi bi-pencil-square"></i></span>
+                                    </button>
+                                </form>
                                 <button class="btn-light">
                                     <span><i class="bi bi-trash"></i></span>
                                 </button>
@@ -67,5 +74,3 @@
 
     </div>
 </div>
-@await Html.PartialAsync("_CreatePanel.cshtml")
-@await Html.PartialAsync("_UpdatePanel.cshtml")
