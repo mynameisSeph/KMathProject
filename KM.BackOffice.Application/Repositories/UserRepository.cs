@@ -113,7 +113,7 @@ namespace KM.BackOffice.Application.Repositories
             existingUser.FirstName = !string.IsNullOrWhiteSpace(userReq.FirstName) ? userReq.FirstName : "";
             existingUser.LastName = !string.IsNullOrWhiteSpace(userReq.LastName) ? userReq.LastName : "";
             existingUser.CreatedAt = userReq.CreatedAt;
-            existingUser.UpdatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
+            existingUser.UpdatedAt = DateTime.Now;
             existingUser.IsActive = userReq.IsActive;
 
             await kDBContext.SaveChangesAsync();
