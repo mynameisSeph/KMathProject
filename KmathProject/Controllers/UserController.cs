@@ -21,13 +21,21 @@ namespace KM.BackOffice.Controllers
             return View();
         }
         [HttpGet]
-        public async Task<IActionResult> IndexPanel(int userId)
+        public async Task<IActionResult> IndexPanel(int userId = 0)
         {
             var user = new UserModel();
             try
             {
                 if (userId > 0)
+                {
                     user = await _userRepository.getUsersByIdAsync(userId);
+                    ViewBag.actions = "Update";
+                }
+                else
+                {
+                    ViewBag.actions = "Create";
+                }
+                ViewBag.useridx = userId;
             }
             catch
             {
@@ -41,10 +49,14 @@ namespace KM.BackOffice.Controllers
         {
             try
             {
+                bool user;
+
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
                 if (req != null)
-                {
-                    var user = await _userRepository.insertUsersAsync(req);
-                }
+                    user = await _userRepository.insertUsersAsync(req);
+
             }
             catch
             {
@@ -54,20 +66,41 @@ namespace KM.BackOffice.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(int UserId, UserModel req)
+        public async Task<IActionResult> Update(UserModel req)
         {
             try
             {
+                bool user;
+
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
                 if (req != null)
+                    user = await _userRepository.updateUsersAsync(req);
+            }
+            catch
+            {
+                throw;
+            }
+            return RedirectToAction("Index", "User");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int userId = 0)
+        {
+            try
+            {
+
+                if (userId > 0)
                 {
-                    var user = await _userRepository.insertUsersAsync(req);
+                    var user = await _userRepository.deleteUserById(userId);
                 }
             }
             catch
             {
                 throw;
             }
-            return RedirectToPage("/Index");
+            return RedirectToAction("Index", "User");
         }
     }
 }

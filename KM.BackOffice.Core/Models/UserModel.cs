@@ -10,15 +10,17 @@ namespace KM.BackOffice.Core.Models
     public class UserModel
     {
         public int Id { get; set; }
-        [Required]
-        public string? Username { get; set; }
 
-        [Required]
-        public string? Password { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกบัญชื่อผู้ใช้งาน")]
+        public string Username { get; set; }
 
-        public string? FirstName { get; set; }
+        [Required(ErrorMessage = "กรุณากรอกรหัสผ่าน")]
+        [MinLength(8, ErrorMessage = "รหัสผ่านต้องไม่น้อยกว่า 8 ตัวอักษร")]
+        public string Password { get; set; }
 
-        public string? LastName { get; set; }
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
 
         public bool IsActive { get; set; }
 

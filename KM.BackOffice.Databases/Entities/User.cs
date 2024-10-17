@@ -9,7 +9,9 @@ public partial class User
 
     public string Username { get; set; } = null!;
 
-    public string Password { get; set; } = null!;
+    public string HashPassword { get; set; } = null!;
+
+    public string Salt { get; set; } = null!;
 
     public string FirstName { get; set; } = null!;
 

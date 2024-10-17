@@ -1,4 +1,5 @@
-﻿using KM.BackOffice.Database.Context;
+﻿using KM.BackOffice.Core.Utilities;
+using KM.BackOffice.Database.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,15 +18,17 @@ namespace KM.BackOffice.Application.Repositories
             _kDBContext = KDBContext;
         }
 
-        public async Task<bool> SignIn(string username, string password)
+        public async Task<bool> SignInAsync(string username, string password)
         {
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
                 return false;
 
-            var signIn = await _kDBContext.Users.Where(s => s.Username == username && s.Password == password).FirstOrDefaultAsync();
+            var user = await _kDBContext.Users.Where(s => s.Username == username).FirstOrDefaultAsync();
 
-            if (signIn == null)
+            if (user == null)
                 return false;
+
+            //bool loginPass = HashPasswordWithSalt.VerifyPassword(password, user.HashPassword, user.Salt);
 
             return true;
 

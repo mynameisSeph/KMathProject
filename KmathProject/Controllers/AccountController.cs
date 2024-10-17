@@ -19,7 +19,7 @@ namespace KM.BackOffice.Controllers
         [HttpPost]
         public async Task<IActionResult> SignIn(string username, string password)
         {
-            var signIn = await _accountRepository.SignIn(username, password);
+            var signIn = await _accountRepository.SignInAsync(username, password);
             if (signIn)
                 return RedirectToAction("Index", "User");
 

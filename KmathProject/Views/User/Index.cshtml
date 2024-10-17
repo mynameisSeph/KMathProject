@@ -61,9 +61,13 @@
                                         <span><i class="bi bi-pencil-square"></i></span>
                                     </button>
                                 </form>
-                                <button class="btn-light">
-                                    <span><i class="bi bi-trash"></i></span>
-                                </button>
+                                <form asp-action="Delete" asp-controller="User" method="post">
+                                    <input type="hidden" name="userId" value="@item.Id" />
+                                    <button type="submit" class="btn-light">
+                                        <span><i class="bi bi-trash"></i></span>
+                                    </button>
+                                </form>
+                                
                             </div>
                         </td>
                     </tr>

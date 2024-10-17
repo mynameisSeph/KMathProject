@@ -44,9 +44,12 @@ public partial class KDBContext : DbContext
             entity.Property(e => e.LastName)
                 .HasMaxLength(255)
                 .HasColumnName("last_name");
-            entity.Property(e => e.Password)
+            entity.Property(e => e.HashPassword)
                 .HasMaxLength(255)
-                .HasColumnName("password");
+                .HasColumnName("hash_password");
+            entity.Property(e => e.Salt)
+                .HasMaxLength(255)
+                .HasColumnName("salt");
             entity.Property(e => e.UpdatedAt)
                 .HasDefaultValueSql("now()")
                 .HasColumnType("timestamp without time zone")

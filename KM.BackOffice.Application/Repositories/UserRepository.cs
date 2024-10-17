@@ -1,5 +1,6 @@
 ﻿using KM.BackOffice.Application.ViewModels;
 using KM.BackOffice.Core.Models;
+using KM.BackOffice.Core.Utilities;
 using KM.BackOffice.Database.Context;
 using KM.BackOffice.Database.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +29,6 @@ namespace KM.BackOffice.Application.Repositories
                 {
                     Id = s.Id,
                     Username = s.Username,
-                    Password = s.Password,
                     FirstName = !string.IsNullOrWhiteSpace(s.FirstName) ? s.FirstName : "",
                     LastName = !string.IsNullOrWhiteSpace(s.LastName) ? s.LastName : "",
                     IsActive = s.IsActive ?? false,
@@ -48,10 +48,9 @@ namespace KM.BackOffice.Application.Repositories
         {
             try
             {
-                var users = await kDBContext.Users.Where(s => s.Id == userId && s.IsDeleted == false).Select(s => new Core.Models.UserModel
+                var users = await kDBContext.Users.Where(s => s.Id == userId && s.IsDeleted == false).Select(s => new UserModel
                 {
                     Username = s.Username,
-                    Password = s.Password,
                     FirstName = !string.IsNullOrWhiteSpace(s.FirstName) ? s.FirstName : "",
                     LastName = !string.IsNullOrWhiteSpace(s.LastName) ? s.LastName : "",
                     IsActive = s.IsActive ?? false,
@@ -71,12 +70,13 @@ namespace KM.BackOffice.Application.Repositories
         {
             try
             {
-                if (userReq == null)
-                    return false;
+                var salt = new HashPasswordWithSalt().GetSaltKey(8);
+                var hashPwd = HashPasswordWithSalt.HashPwdWithSalt(userReq.Password, salt);
 
                 var user = new Database.Entities.User();
                 user.Username = userReq.Username ?? "";
-                user.Password = userReq.Password ?? "";
+                user.Salt = salt;
+                user.HashPassword = hashPwd;
                 user.FirstName = userReq.FirstName ?? "";
                 user.LastName = userReq.LastName ?? "";
                 user.CreatedAt = DateTime.UtcNow;
@@ -94,26 +94,27 @@ namespace KM.BackOffice.Application.Repositories
             }
         }
 
-        public async Task<bool> updateUsersAsync(int userId, UserModel userReq)
+        public async Task<bool> updateUsersAsync(UserModel userReq)
         {
-            if (userReq == null)
+            if (userReq.Id < 1)
                 return false;
 
-            if (userId < 1)
+            var existingUser = await kDBContext.Users.FindAsync(userReq.Id);
+
+            if (existingUser == null)
                 return false;
 
-            var indexUser = await kDBContext.Users.FindAsync(userId);
+            var salt = new HashPasswordWithSalt().GetSaltKey(8);
+            var hashPwd = HashPasswordWithSalt.HashPwdWithSalt(userReq.Password, salt);
 
-            if (indexUser == null)
-                return false;
-
-            indexUser.Username = userReq.Username ?? "";
-            indexUser.Password = userReq.Password ?? "";
-            indexUser.FirstName = !string.IsNullOrWhiteSpace(userReq.FirstName) ? userReq.FirstName : "";
-            indexUser.LastName = !string.IsNullOrWhiteSpace(userReq.LastName) ? userReq.LastName : "";
-            indexUser.CreatedAt = userReq.CreatedAt;
-            indexUser.UpdatedAt = DateTime.UtcNow;
-            indexUser.IsActive = userReq.IsActive;
+            existingUser.Username = userReq.Username ?? "";
+            existingUser.Salt = salt;
+            existingUser.HashPassword = hashPwd;
+            existingUser.FirstName = !string.IsNullOrWhiteSpace(userReq.FirstName) ? userReq.FirstName : "";
+            existingUser.LastName = !string.IsNullOrWhiteSpace(userReq.LastName) ? userReq.LastName : "";
+            existingUser.CreatedAt = userReq.CreatedAt;
+            existingUser.UpdatedAt = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Unspecified);
+            existingUser.IsActive = userReq.IsActive;
 
             await kDBContext.SaveChangesAsync();
             return true;
@@ -126,12 +127,12 @@ namespace KM.BackOffice.Application.Repositories
                 if (userId < 1)
                     return false;
 
-                var indexUser = await kDBContext.Users.FindAsync(userId);
+                var existingUser = await kDBContext.Users.FindAsync(userId);
 
-                if (indexUser == null)
+                if (existingUser == null)
                     return false;
 
-                indexUser.IsDeleted = true;
+                existingUser.IsDeleted = true;
                 await kDBContext.SaveChangesAsync();
                 return true;
             }

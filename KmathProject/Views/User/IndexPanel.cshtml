@@ -1,7 +1,12 @@
 ﻿@using KM.BackOffice.Core.Models
 @model UserModel
+@{
+    string action = ViewBag.actions;
+    int userId = ViewBag.useridx;
+}
 <div>
-    <form method="post" asp-action="Create" asp-controller="User">
+    <form method="post" asp-action="@action" asp-controller="User">
+        <input type="hidden" class="form-control" id="id" asp-for="Id" value="@userId" />
         <div class="flex-grow-1">
             <div class="mb-3">
                 <label for="username" class="form-label">ชื่อผู้ใช้งาน</label>
