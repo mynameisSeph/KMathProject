@@ -120,7 +120,7 @@ namespace KM.BackOffice.Application.Repositories
             return true;
         }
 
-        public async Task<bool> deleteUserById(int userId)
+        public async Task<bool> deleteUserAsync(int userId)
         {
             try
             {
