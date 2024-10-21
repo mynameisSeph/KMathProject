@@ -49,13 +49,14 @@ namespace KM.BackOffice.Controllers
         {
             try
             {
-                bool user;
+                bool user = false;
 
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
                 if (req != null)
                     user = await _userRepository.insertUsersAsync(req);
+
 
             }
             catch
@@ -93,7 +94,7 @@ namespace KM.BackOffice.Controllers
 
                 if (userId > 0)
                 {
-                    var user = await _userRepository.deleteUserById(userId);
+                    var user = await _userRepository.deleteUserAsync(userId);
                 }
             }
             catch

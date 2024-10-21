@@ -1,4 +1,6 @@
-﻿<html xmlns="http://www.w3.org/1999/xhtml">
+﻿@using KmathProject.Models
+@model SignInModel;
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,15 +13,21 @@
 </head>
 <body>
     <div class="mx-auto">
-        <img src="~/img/logo-kmath.png" alt="logo-kmath" width="350px">
+        <img src="~/img/" alt="logo-kmath" width="350px">
     </div>
     <div class="comic-login-card mx-auto">
         <div class="card-header">
             <h2>Login</h2>
         </div>
         <form class="card-body" method="post" asp-action="SignIn" asp-controller="Account">
-            <input type="text" placeholder="Username" name="username" required>
-            <input type="password" placeholder="Password" name="password" required>
+            <div class="row">
+                <input type="text" placeholder="Username" asp-for="Username">
+                <span class="text-danger" asp-validation-for="Username"></span>
+            </div>
+            <div class="row">
+                <input type="password" placeholder="Password" asp-for="Password">
+                <span class="text-danger" asp-validation-for="Password"></span>
+            </div>
             <button type="submit" class="login-btn">Login</button>
         </form>
         <div class="card-footer">
@@ -28,81 +36,3 @@
     </div>
 </body>
 </html>
-
-<style>
-    body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        font-family: 'Comic Sans MS', sans-serif;
-        background: #ff9a8b;
-        background: linear-gradient(135deg, #ffb347 0%, #ffcc33 55%, #ff9966 100%);
-    }
-
-    .comic-login-card {
-        background: #ffcc00;
-        border: 4px solid #000;
-        border-radius: 15px;
-        padding: 20px;
-        width: 500px;
-        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .card-header h2 {
-        margin: 0;
-        text-align: center;
-        color: #000;
-        font-size: 24px;
-    }
-
-    .card-body {
-        display: flex;
-        flex-direction: column;
-        margin-top: 20px;
-    }
-
-        .card-body input {
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 3px solid #000;
-            border-radius: 10px;
-            font-size: 16px;
-        }
-
-    .login-btn {
-        background: #f77f00;
-        color: #fff;
-        border: 3px solid #000;
-        border-radius: 10px;
-        padding: 10px;
-        font-size: 18px;
-        cursor: pointer;
-        transition: background 0.3s ease;
-    }
-
-        .login-btn:hover {
-            background: #d62828;
-        }
-
-    .card-footer {
-        text-align: center;
-        margin-top: 15px;
-    }
-
-        .card-footer p {
-            color: #000;
-        }
-
-        .card-footer a {
-            color: #f77f00;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-            .card-footer a:hover {
-                color: #d62828;
-            }
-
-</style>

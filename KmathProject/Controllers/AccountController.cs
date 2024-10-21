@@ -1,4 +1,5 @@
 ﻿using KM.BackOffice.Application.Repositories;
+using KmathProject.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KM.BackOffice.Controllers
@@ -17,9 +18,13 @@ namespace KM.BackOffice.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SignIn(string username, string password)
+        public async Task<IActionResult> SignIn(SignInModel user)
         {
-            var signIn = await _accountRepository.SignInAsync(username, password);
+            if (!ModelState.IsValid)
+                return View("~/Views/Account/Login.cshtml", user);
+
+
+            var signIn = await _accountRepository.SignInAsync(user.Username, user.Password);
             if (signIn)
                 return RedirectToAction("Index", "User");
 
